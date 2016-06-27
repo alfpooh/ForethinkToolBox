@@ -221,8 +221,8 @@ class FtkToolBtn: UIButton {
             boxPath.lineCapStyle = .Round
             boxPath.usesEvenOddFillRule = true
             // transform
-            //boxPath.applyTransform(CGAffineTransformMakeScale(iconScale, iconScale))
-            //boxPath.applyTransform(CGAffineTransformMakeTranslation(setToCenterX, setToCenterY))
+            boxPath.applyTransform(CGAffineTransformMakeScale(iconScale,iconScale))
+            boxPath.applyTransform(CGAffineTransformMakeTranslation((cordiW*(1-iconScale))/2, (cordiH*(1-iconScale))/2))
             
             strokeColor.setStroke()
             boxPath.lineWidth = strokelineWidth

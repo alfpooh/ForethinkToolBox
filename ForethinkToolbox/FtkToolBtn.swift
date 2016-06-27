@@ -180,9 +180,12 @@ class FtkToolBtn: UIButton {
             //Drawing Arrow stem
             
             let linePath = UIBezierPath()
+            let iconCenterW = cordiW+offsetX
+            let iconCenterH = cordiH+offsetY
+            
             //Arriowtip is
             let arrowtip = CGPoint(x:(cordiW/2)+offsetX, y:(((cordiH*5)*(1/iconScale))/36+offsetY+specialF))
-            linePath.moveToPoint(CGPoint(x:cordiW/2+offsetX , y:cordiH/2+offsetY))
+            linePath.moveToPoint(CGPoint(x:(cordiW/2)+offsetX , y:(cordiH/2)+offsetY))
             linePath.addLineToPoint(arrowtip)
             
             //Drawing Arrow head
@@ -207,17 +210,19 @@ class FtkToolBtn: UIButton {
             
             //Drawing box
             
-            let boxPath = UIBezierPath()
-            boxPath.moveToPoint(CGPoint(x:(((cordiW*5)/12)*iconScale)+offsetX, y:((cordiH*5)/12*iconScale)+offsetY))
-            boxPath.addLineToPoint(CGPoint(x:((cordiW/3)*iconScale)+offsetX, y:((cordiH*5)/12*iconScale)+offsetY))
-            boxPath.addLineToPoint(CGPoint(x:((cordiW/3)*iconScale)+offsetX, y:((cordiH*3)/4*iconScale)+offsetY))
-            boxPath.addLineToPoint(CGPoint(x:((cordiW*2/3)*iconScale)+offsetX, y:((cordiH*3)/4*iconScale)+offsetY))
-            boxPath.addLineToPoint(CGPoint(x:((cordiW*2/3)*iconScale)+offsetX, y:((cordiH*5)/12*iconScale)+offsetY))
-            boxPath.addLineToPoint(CGPoint(x:(((cordiW*7)/12)*iconScale)+offsetX, y:((cordiH*5)/12*iconScale)+offsetY))
+            var boxPath = UIBezierPath()
+            boxPath.moveToPoint(CGPoint(x:((iconCenterW*5)/12), y:((iconCenterH*5)/12)))
+            boxPath.addLineToPoint(CGPoint(x:((iconCenterW/3)), y:((iconCenterH*5)/12)))
+            boxPath.addLineToPoint(CGPoint(x:((iconCenterW/3)), y:((iconCenterH*3)/4)))
+            boxPath.addLineToPoint(CGPoint(x:((iconCenterW*2/3)), y:((iconCenterH*3)/4)))
+            boxPath.addLineToPoint(CGPoint(x:((iconCenterW*2/3)), y:((iconCenterH*5)/12)))
+            boxPath.addLineToPoint(CGPoint(x:(((iconCenterW*7)/12)), y:((iconCenterH*5)/12)))
             // lineCapStyle can be .Round .Square .Butt
             boxPath.lineCapStyle = .Round
-            
             boxPath.usesEvenOddFillRule = true
+            // transform
+            //boxPath.applyTransform(CGAffineTransformMakeScale(iconScale, iconScale))
+            //boxPath.applyTransform(CGAffineTransformMakeTranslation(setToCenterX, setToCenterY))
             
             strokeColor.setStroke()
             boxPath.lineWidth = strokelineWidth

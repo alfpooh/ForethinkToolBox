@@ -22,7 +22,7 @@ class FtkToolBtn: UIButton {
     @IBInspectable var offsetX: CGFloat = 0
     @IBInspectable var offsetY: CGFloat = 0
     @IBInspectable var specialF: CGFloat = 1
-    @IBInspectable var LineCapStyle: Int = 1
+    @IBInspectable var LineCapStyle: CGLineCap?
 
     
     
@@ -83,6 +83,7 @@ class FtkToolBtn: UIButton {
             
             //set the stroke color
             strokeColor.setStroke()
+            //.lineCapStyle .Butt .Round .Square
             minusPath.lineCapStyle = .Round
             //draw the stroke
             minusPath.stroke()
@@ -215,10 +216,66 @@ class FtkToolBtn: UIButton {
             boxPath.addLineToPoint(CGPoint(x:(((cordiW*7)/12)*iconScale)+offsetX, y:((cordiH*5)/12*iconScale)+offsetY))
             // lineCapStyle can be .Round .Square .Butt
             boxPath.lineCapStyle = .Round
+            
             boxPath.usesEvenOddFillRule = true
             
             strokeColor.setStroke()
             boxPath.lineWidth = strokelineWidth
+            boxPath.stroke()
+            
+            
+        } else if self.tag == 6 {
+            // \\\ 3 lines aka Hamburger
+            if specialF == 0 {specialF = 10} //default
+            //Drawing Arrow stem
+            
+            let minusWidth: CGFloat = min(cordiW, cordiH) * 0.7
+            
+            //create the path
+            let minusPath = UIBezierPath()
+            
+            //set the path's line width to the height of the stroke
+            minusPath.lineWidth = strokelineWidth
+            
+            //move the initial point of the path
+            //Centr line: to the start of the horizontal stroke
+            minusPath.moveToPoint(CGPoint(
+                x:(cordiW/2 - (minusWidth/2 * iconScale) + 0.5) + offsetX ,
+                y:cordiH/2 + 0.5 + offsetY))
+            
+            //Centr line:  add a point to the path at the end of the stroke
+            minusPath.addLineToPoint(CGPoint(
+                x:(cordiW/2 + (minusWidth/2 * iconScale) + 0.5) + offsetX,
+                y:cordiH/2 + 0.5 + offsetY))
+            
+            //Centr line: to the start of the horizontal stroke
+            minusPath.moveToPoint(CGPoint(
+                x:(cordiW/2 - (minusWidth/2 * iconScale) + 0.5) + offsetX ,
+                y:cordiH/2 + specialF  + offsetY))
+            
+            //Centr line:  add a point to the path at the end of the stroke
+            minusPath.addLineToPoint(CGPoint(
+                x:(cordiW/2 + (minusWidth/2 * iconScale) + 0.5) + offsetX,
+                y:cordiH/2 + specialF  + offsetY))
+
+            
+            //Centr line: to the start of the horizontal stroke
+            minusPath.moveToPoint(CGPoint(
+                x:(cordiW/2 - (minusWidth/2 * iconScale) + 0.5) + offsetX ,
+                y:cordiH/2 - specialF  + offsetY))
+            
+            //Centr line:  add a point to the path at the end of the stroke
+            minusPath.addLineToPoint(CGPoint(
+                x:(cordiW/2 + (minusWidth/2 * iconScale) + 0.5) + offsetX,
+                y:cordiH/2 - specialF  + offsetY))
+
+            
+            //set the stroke color
+            strokeColor.setStroke()
+            minusPath.lineCapStyle = .Round
+            //draw the stroke
+            minusPath.stroke()
         }
+
     }
 }//end

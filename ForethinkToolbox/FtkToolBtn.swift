@@ -44,7 +44,7 @@ class FtkToolBtn: UIButton {
         
         
         if self.tag == 1 {
-            // RESET button
+            // RESET or O button
             
             let arcCenter = CGPoint(x: cordiW/2, y: cordiH/2)
             let radius = ((bounds.width/2) * 0.4) * iconScale
@@ -57,6 +57,12 @@ class FtkToolBtn: UIButton {
             strokeColor.setStroke()
             //set offset
             circlePath.applyTransform(CGAffineTransformMakeTranslation(offsetX, offsetY))
+            
+            if specialF > 0 {
+                strokeColor.setFill()
+                circlePath.fill()
+            }
+            
             //draw the stroke
             circlePath.lineWidth = strokelineWidth
             circlePath.stroke()
@@ -300,7 +306,7 @@ class FtkToolBtn: UIButton {
                 x:(cordiW/2 + (minusWidth/2 * iconScale) + 0.5),
                 y:cordiH/2 - specialF))
             
-            //offset
+            //offset 
             minusPath.applyTransform(CGAffineTransformMakeTranslation(offsetX, offsetY))
             
             //set the stroke color
@@ -308,7 +314,43 @@ class FtkToolBtn: UIButton {
             minusPath.lineCapStyle = .Round
             //draw the stroke
             minusPath.stroke()
+        } else if self.tag == 7 {
+        
+        // Star shape
+    
+            //// Star Drawing
+            let starPath = UIBezierPath()
+            starPath.moveToPoint(CGPoint(x: 0, y: -25))
+            starPath.addLineToPoint(CGPoint(x: 6.17, y: -8.5))
+            starPath.addLineToPoint(CGPoint(x: 23.78, y: -7.73))
+            starPath.addLineToPoint(CGPoint(x: 9.99, y: 3.25))
+            starPath.addLineToPoint(CGPoint(x: 14.69, y: 20.23))
+            starPath.addLineToPoint(CGPoint(x: 0, y: 10.5))
+            starPath.addLineToPoint(CGPoint(x: -14.69, y: 20.23))
+            starPath.addLineToPoint(CGPoint(x: -9.99, y: 3.25))
+            starPath.addLineToPoint(CGPoint(x: -23.78, y: -7.73))
+            starPath.addLineToPoint(CGPoint(x: -6.17, y: -8.5))
+            starPath.closePath()
+            //scale
+            starPath.applyTransform(CGAffineTransformMakeScale(iconScale,iconScale))
+            
+            //offset
+            starPath.applyTransform(CGAffineTransformMakeTranslation(cordiW/2,cordiH/2))
+            starPath.applyTransform(CGAffineTransformMakeTranslation(offsetX, offsetY))
+            
+            if specialF > 0 {
+            strokeColor.setFill()
+            starPath.fill()
+            } 
+            
+            //set the stroke color
+            strokeColor.setStroke()
+            starPath.lineWidth = strokelineWidth
+            starPath.lineCapStyle = .Round
+            //draw the stroke
+            starPath.stroke()
         }
+
 
     }
 }//end

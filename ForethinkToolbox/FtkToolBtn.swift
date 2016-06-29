@@ -23,8 +23,9 @@ class FtkToolBtn: UIButton {
     @IBInspectable var offsetY: CGFloat = 0
     @IBInspectable var specialF: CGFloat = 1
     @IBInspectable var LineCapStyle: CGLineCap?
-
     
+
+
     
     override func drawRect(rect: CGRect) {
         
@@ -103,14 +104,58 @@ class FtkToolBtn: UIButton {
             let mfactor: CGFloat = (min(cordiW, cordiH))
             //create the path
             let plusPath = UIBezierPath()
-            let cordiWscaled = cordiW * iconScale
-            let cordiHscaled = cordiH * iconScale
             //set the path's line width to the height of the stroke
             plusPath.lineWidth = strokelineWidth
             
-            let strokePoneX: CGFloat = (cordiWscaled/2)-mfactor
-            let strokePtwoX: CGFloat = (cordiWscaled/2)+mfactor
-            let strokePoneY: CGFloat = (cordiHscaled/2)+0.5
+            let strokePoneX: CGFloat = (cordiW/2)-mfactor
+            let strokePtwoX: CGFloat = (cordiW/2)+mfactor
+            let strokePoneY: CGFloat = (cordiH/2)+0.5
+            //move the initial point of the path
+            //to the start of the horizontal stroke
+            plusPath.moveToPoint(CGPoint(
+                x:strokePoneX,
+                y:strokePoneY))
+            
+            //add a point to the path at the end of the stroke
+            plusPath.addLineToPoint(CGPoint(
+                x:strokePtwoX,
+                y:strokePoneY))
+            
+            //move the initial point of the path
+            //to the start of the vertical stroke
+            plusPath.moveToPoint(CGPoint(x:strokePoneY,y:(strokePoneX-specialF)))
+            
+            //add a point to the path at the end of the stroke
+            plusPath.addLineToPoint(CGPoint(x:strokePoneY,y:(strokePtwoX+specialF)))
+            
+            // scale
+            plusPath.applyTransform(CGAffineTransformMakeTranslation(-cordiW/2,-cordiH/2))
+            plusPath.applyTransform(CGAffineTransformMakeScale(iconScale,iconScale))
+            
+            //set back and offset
+            plusPath.applyTransform(CGAffineTransformMakeTranslation((cordiW/2)+offsetX,(cordiH/2)+offsetY))
+            
+            //set the stroke color
+            strokeColor.setStroke()
+            plusPath.lineCapStyle = .Round
+            plusPath.lineWidth = strokelineWidth
+            
+            //draw the stroke
+            plusPath.stroke()
+        }
+            
+        else if self.tag == 4 {
+            //Multiply or X Button
+            
+            let mfactor: CGFloat = (min(cordiW, cordiH))
+            //create the path
+            let plusPath = UIBezierPath()
+            //set the path's line width to the height of the stroke
+            plusPath.lineWidth = strokelineWidth
+            
+            let strokePoneX: CGFloat = (cordiW/2)-mfactor
+            let strokePtwoX: CGFloat = (cordiW/2)+mfactor
+            let strokePoneY: CGFloat = (cordiH/2)
             //move the initial point of the path
             //to the start of the horizontal stroke
             plusPath.moveToPoint(CGPoint(
@@ -130,8 +175,14 @@ class FtkToolBtn: UIButton {
             plusPath.addLineToPoint(CGPoint(x:strokePoneY,y:(strokePtwoX+specialF)))
             
             // set to center and offset
-            plusPath.applyTransform(CGAffineTransformMakeTranslation((cordiW*(1-iconScale))/2, (cordiH*(1-iconScale))/2))
-            plusPath.applyTransform(CGAffineTransformMakeTranslation(offsetX, offsetY))
+            plusPath.applyTransform(CGAffineTransformMakeTranslation(-cordiW/2,-cordiH/2))
+            plusPath.applyTransform(CGAffineTransformMakeScale(iconScale,iconScale))
+            
+            //rotating 45deg
+            plusPath.applyTransform(CGAffineTransformMakeRotation(CGFloat(M_PI)/4))
+            
+            //set back
+            plusPath.applyTransform(CGAffineTransformMakeTranslation((cordiW/2)+offsetX,(cordiH/2)+offsetY))
             
             //set the stroke color
             strokeColor.setStroke()
@@ -140,51 +191,6 @@ class FtkToolBtn: UIButton {
             
             //draw the stroke
             plusPath.stroke()
-        }
-            
-        else if self.tag == 4 {
-            //MULTIPLY OR JUST X
-            
-            let mfactor: CGFloat = (min(cordiW, cordiH))
-            //create the path
-            let xPath = UIBezierPath()
-            
-            //set the path's line width to the height of the stroke
-            xPath.lineWidth = strokelineWidth
-            
-            let strokePoneX: CGFloat = cordiW/2 - mfactor
-            let strokePtwoX: CGFloat = cordiW/2 + mfactor
-            let strokePoneY: CGFloat = cordiH/2 + 0.5
-            //move the initial point of the path
-            //to the start of the horizontal stroke
-            xPath.moveToPoint(CGPoint(
-                x:strokePoneX,
-                y:(strokePoneX-specialF)))
-            
-            //add a point to the path at the end of the stroke
-            xPath.addLineToPoint(CGPoint(
-                x:strokePtwoX,
-                y:(strokePtwoX+specialF)))
-            
-            //move the initial point of the path
-            //to the start of the vertical stroke
-
-            xPath.moveToPoint(CGPoint(x:strokePoneX,y:(strokePtwoX+specialF)))
-            
-            //add a point to the path at the end of the stroke
-            xPath.addLineToPoint(CGPoint(x:strokePtwoX,y:(strokePoneX-specialF)))
-            
-            //path align to center and apply offset
-            xPath.applyTransform(CGAffineTransformMakeTranslation((cordiW*(1-iconScale))/2, (cordiH*(1-iconScale))/2))
-            xPath.applyTransform(CGAffineTransformMakeTranslation(offsetX, offsetY))
-
-            //set the stroke color
-            strokeColor.setStroke()
-            xPath.lineCapStyle = .Round
-            xPath.lineWidth = strokelineWidth
-            
-            //draw the stroke
-            xPath.stroke()
             
         } else if self.tag == 5 {
             //Export icon
